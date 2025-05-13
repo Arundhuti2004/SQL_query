@@ -1,0 +1,334 @@
+1.CREATE A TABLE :
+CREATE TABLE STUDENT(ID INT PRIMARY KEY , NAME VARCHAR2(30));
+2.INSERT VALUES:
+INSERT INTO STUDENT VALUES(1,'ARUNDHUTI');
+3.TO SHOW THE TABLE VALUES:
+SELECT *FROM STUDENT
+
+
+1. CREATE A WORKER TABLE:
+     CREATE TABLE WORKER(WORKER_ID NUMBER NOT NULL PRIMARY KEY ,FIRST_NAME VARCHAR2(78),LAST_NAME VARCHAR2(30),SALARY NUMBER(30),JOINING_DATE DATE,DEPARTMENT VARCHAR2(25));
+2.multiple row insert:
+
+INSERT ALL
+    INTO WORKER (WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES (002, 'MANIKA', 'ROY', 10000, TO_DATE('13-02-2020', 'DD-MM-YYYY'), 'AIML')
+    INTO WORKER (WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES (003, 'ANIKA', 'GHOSE', 40000, TO_DATE('01-02-2020', 'DD-MM-YYYY'), 'CSE')
+    INTO WORKER (WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES (004, 'MANISA', 'SARKAR', 1000, TO_DATE('23-02-2020', 'DD-MM-YYYY'), 'CSE')
+    INTO WORKER (WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES (005, 'ANISA', 'ROY', 30000, TO_DATE('28-02-2010', 'DD-MM-YYYY'), 'IOT')
+    INTO WORKER (WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES (006, 'ANITA', 'DAS', 90000, TO_DATE('15-02-2020', 'DD-MM-YYYY'), 'CSE')
+    INTO WORKER (WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES (007, 'MANIK', 'DUTTA', 40000, TO_DATE('13-05-2020', 'DD-MM-YYYY'), 'CSE')
+    INTO WORKER (WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES (008, 'ANIK', 'ROY', 70000, TO_DATE('13-12-2020', 'DD-MM-YYYY'), 'AI')
+SELECT * FROM dual;
+
+3. SHOW THE TABLE VALUES:
+SELECT * FROM WORKER;
+
+4.FORGIEN KEY:
+CREATE TABLE BONU(WORKER_REF_ID INT, BONUS_AMOUNT INT,BONUS_DATE DATE,FOREIGN KEY(WORKER_REF_ID) REFERENCES WORKER(WORKER_ID) ON DELETE CASCADE);
+OR
+CREATE TABLE BONU(WORKER_REF_ID NUMBER, BONUS_AMOUNT NUMBER(40),BONUS_DATE DATE,FOREIGN KEY(WORKER_REF_ID) REFERENCES WORKER(WORKER_ID) ON DELETE CASCADE);
+
+5. SHOW ONLY SALARY:
+SELECT SALARY FROM WORKER;
+
+6.SHOW ONLY FIRST NAME AND SALARY:
+ SELECT FIRST_NAME,SALARY FROM WORKER;
+
+7.WORK WITH DIRECT DUAL:
+ADD : SELECT 44 + 6 AS RESULT FROM DUAL;
+CURRENT DATE : SELECT CURRENT_DATE AS CURRENT_DATE FROM DUAL ; OR SELECT SYSDATE AS CURRENT_DATE FROM DUAL ;
+LOWERCASE : SELECT LOWER('Arundhuti Sarkar') AS LOWER_CASE_STRING FROM DUAL ;
+UPPERCASE : SELECT UPPER('Arundhuti Sarkar') AS LOWER_CASE_STRING FROM DUAL ;
+8.USING WHERE:
+ SELECT * FROM WORKER WHERE SALARY > 70000;
+ SELECT * FROM WORKER WHERE DEPARTMENT = 'AI';
+.. BETWEEN : SELECT * FROM WORKER WHERE SALARY BETWEEN 1000 AND 100000;
+..OR : SELECT * FROM WORKER WHERE DEPARTMENT = 'CSE' OR DEPARTMENT = 'IOT';
+..IN : SELECT * FROM WORKER WHERE DEPARTMENT IN ('CSE','IOT');
+NOT IN : SELECT * FROM WORKER WHERE DEPARTMENT NOT IN ('CSE','IOT');
+9 . NULL VALUE INSERT:
+ INSERT INTO CUS VALUES (001,NULL);
+10. CHECK NULL VALUES :
+ SELECT * FROM CUS WHERE SALARY IS NULL;
+11. %NI% : SELECT * FROM WORKER WHERE FIRST_NAME LIKE '%NI%';
+12._NI% : SELECT * FROM WORKER WHERE FIRST_NAME LIKE '_NI%';
+13. SORT ORDER BY :
+ SELECT * FROM WORKER ORDER BY SALARY;
+DESC : SELECT * FROM WORKER ORDER BY SALARY DESC;
+ASC : SELECT * FROM WORKER ORDER BY SALARY ASC;
+DISTINCT : SELECT DISTINCT DEPARTMENT FROM WORKER;
+14. GROUP BY:
+ 1. COUNT : SELECT DEPARTMENT,  COUNT(SALARY) FROM WORKER GROUP BY DEPARTMENT;
+ 2. MAX : SELECT DEPARTMENT,  MAX(SALARY) FROM WORKER GROUP BY DEPARTMENT;
+ 3.MIN : SELECT DEPARTMENT,  MIN(SALARY) FROM WORKER GROUP BY DEPARTMENT;
+ 4.AVG:  SELECT DEPARTMENT,  AVG(SALARY) FROM WORKER GROUP BY DEPARTMENT;
+ 5. SELECT DEPARTMENT,  SUM(SALARY) FROM WORKER GROUP BY DEPARTMENT;
+15.HAVING USING GROUP BY :
+ SELECT DEPARTMENT,  COUNT(SALARY) FROM WORKER GROUP BY DEPARTMENT HAVING COUNT(DEPARTMENT) > 3;
+16. CREATE TABLE WITH UNIQUE , DEFAULT , CONSTRAIN:
+ CREATE TABLE ACOUNT (ID INT PRIMARY KEY , NAME VARCHAR2(90) UNIQUE , BALANCE INT , CONSTRAINT ACC_BALANCE_CHK CHECK(BALANCE > 1000), AGE INT DEFAULT 0 NOT NULL);
+.... INSERT INTO ACOUNT (ID , NAME , BALANCE ) VALUES (05,'ANIMA',3000);
+17. DROP A TABLE :
+ DROP TABLE ACOUNT;
+18. ADD NEW ATRIBUTES:
+ ALTER TABLE ACOUNT ADD INTEREST FLOAT DEFAULT 0 NOT NULL ;
+19. MODIFY NEW ATRIBUTES DATATYPE;
+  ALTER TABLE ACOUNT MODIFY INTEREST NUMBER ;
+20.DESCRIBE TABLE:
+  DESC ACOUNT;
+21. CHANGE THE ATTRIBUTES NAME :
+ ALTER TABLE ACOUNT RENAME COLUMN INTEREST TO SAVING_INTEREST  ;
+22.DROP A ATTRIBUTES IN A TABLE :
+ ALTER TABLE ACOUNT DROP COLUMN SAVING_INTEREST  ;
+23. CHANGE THE TABLE NAME:
+ ALTER TABLE ACOUNT RENAME TO ACCOUNT_DETAILS;
+ 
+24 . UPDATE ATTRIBUTES VALUE:
+    UPDATE ACCOUNT_DETAILS SET BALANCE = 9657 , AGE = 6 , NAME = 'PARTHO' WHERE ID = 9;
+25. UPDATE MULTIPLE TUPLE IN ONE TIME :
+  UPDATE ACCOUNT_DETAILS SET BALANCE = 8888;
+26. ADDING THE  VALUE  OF ANY ATTRIBUTES:
+   UPDATE ACCOUNT_DETAILS SET BALANCE = 8888 + 2;
+27. DELETE A TUPLE IN A TABLE:
+   DELETE FROM ACCOUNT_DETAILS WHERE ID = 9;
+28. DELETE ALL TUPLE IN ONE TIME :
+  DELETE FROM ACCOUNT_DETAILS; 
+29. DELETE CHILD TUPLE:
+  DELETE FROM ACOUNT WHERE ID_A = 5;
+30.BUT CAN NOT DELETE PARENT TUPLE WITHOUT USING ON DELETE CASCADE OR WITHOUT USING ON DELETE NULL
+ 1.CREATE TABLE ACOUNT (ID_A INT PRIMARY KEY , NAME VARCHAR2(90)  , BALANCE INT , AGE INT , ADDRESS VARCHAR2(90) ,FOREIGN KEY (ID_A) REFERENCES ACCOUNT_DETAILS(ID) ON DELETE CASCADE) ;
+ 2.CREATE TABLE ACOUNTSS (ID_A INT  , NAME VARCHAR2(90)  , BALANCE INT , AGE INT , ADDRESS VARCHAR2(90) ,FOREIGN KEY (ID_A) REFERENCES ACCOUNT_DETAILS(ID) ON DELETE SET NULL) ;
+31.REPLACE IF PRESENT OR CREATE IN ONE ATTRIBUTES:
+  MERGE INTO ACCOUNT_DETAILS target
+USING (SELECT 4 AS ID, 10 AS AGE FROM dual) source
+ON (target.ID = source.ID)
+WHEN MATCHED THEN 
+    UPDATE SET target.AGE = source.AGE
+WHEN NOT MATCHED THEN
+    INSERT (ID, AGE) VALUES (source.ID, source.AGE);
+32.REPLACE IF PRESENT OR CREATE IN MULTIPLE ATTRIBUTES:
+   MERGE INTO ACCOUNT_DETAILS target
+USING (SELECT 4 AS ID, 99 AS BALANCE, 7 AS AGE FROM dual) source
+ON (target.ID = source.ID)
+WHEN MATCHED THEN 
+    UPDATE SET target.BALANCE = source.BALANCE, target.AGE = source.AGE
+WHEN NOT MATCHED THEN
+    INSERT (ID, BALANCE, AGE) VALUES (source.ID, source.BALANCE, source.AGE);
+33.join :
+SELECT e.employee_name, d.department_name, l.location_name
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+JOIN locations l ON d.location_id = l.location_id;
+40 . UNION :
+SELECT column_list FROM table1
+UNION
+SELECT column_list FROM table2;
+42. UNION ALL:
+SELECT column_list FROM table1
+UNION ALL
+SELECT column_list FROM table2;
+
+43. INTERSECT:
+SELECT column_list FROM table1
+INTERSECT
+SELECT column_list FROM table2;
+44.MINUS:
+SELECT column_list FROM table1
+MINUS
+SELECT column_list FROM table2;
+	
+33.natural join:
+  select * from employee natural join department;
+34.inner join :
+ select e.employee_name , d.deptment_name 
+     from employee e inner join department d 
+	on e.department_id = d.deptment_id ;
+35. left outer join :
+   SELECT e.employee_name, d.department_name
+FROM employees e
+LEFT OUTER JOIN departments d ON e.department_id = d.department_id;
+36.right outer join :
+SELECT e.employee_name, d.department_name
+FROM employees e
+RIGHT OUTER JOIN departments d ON e.department_id = d.department_id;
+37.full outer join :
+SELECT e.employee_name, d.department_name
+FROM employees e
+FULL OUTER JOIN departments d ON e.department_id = d.department_id;
+
+9. SELECT employee_id, 
+       department_name,
+       salary,
+       CASE 
+           WHEN department_name = 'Sales' THEN salary * 1.10
+           WHEN department_name = 'Marketing' THEN salary * 1.20
+           ELSE salary
+       END AS REVISED_SALARY
+FROM employees;
+10.SELECT TO_CHAR(SYSDATE, 'DD-MON-YYYY') AS FORMATTED_DATE
+FROM DUAL;
+11.SELECT TRUNC(SYSDATE, 'MM') AS FIRST_DAY_OF_MONTH
+FROM DUAL;
+12.SELECT ROUND(SYSDATE) AS ROUNDED_DATE
+FROM DUAL;
+13.SELECT LAST_DAY(SYSDATE) AS LAST_DAY_OF_MONTH
+FROM DUAL;
+14.SELECT f_name, l_name, 'Monthly salary is Rs.' || salary AS "Monthly Salary Details"
+FROM employee
+WHERE f_name = 'Arun' AND job_type = 'Manager';
+
+subquries:
+
+1.where clause same table : employees with age > 30
+  select * from employee where age in (select age from employee where age > 30);
+
+2.where clause different table : emp details working in more than 1 project
+   select * from employee where id in (select empid from project group by empid having            count(empid) > 1;
+
+3.single value subquery : emp details having age > average
+select * from employee where age > (select avg(age) from employee);
+
+4.from clause - derived tables : select max age person whose first name contains 'a'
+  select max(age) from (select * from Employee where fname like '%a%' ) AS temp;
+
+5. coreleted subquries : find 3rd oldest employee
+  select * from employee e1 where 3 = (select count (e2.age) from employee e2 where e2.age >= e1.age);
+ 
+views:
+1. create view customer_view as select fname, age from employee
+2. select * from customer_view;
+3.alter view customer_view as select fname , lmane , age from employee
+4.drop view if exists customer_view;
+
+
+1.SELECT column_name, data_type
+FROM user_tab_columns
+WHERE table_name = 'EMPLOYEE';
+
+2. Query to create a table from an existing table with all fields
+
+CREATE TABLE new_employee AS 
+SELECT * FROM employee;
+
+3. Query to create a table from an existing table with selected fields
+
+CREATE TABLE selected_employee AS 
+SELECT empno, ename, salary 
+FROM employee;
+
+4.Query to create a new table from an existing table without any records
+
+CREATE TABLE empty_employee AS 
+SELECT * FROM employee WHERE 1=0;
+
+5.Query to alter the column empno number(4) to empno number(6)
+
+ALTER TABLE employee 
+MODIFY empno NUMBER(6);
+
+6.Query to alter the table employee with multiple columns (empno, ename)
+
+ALTER TABLE employee 
+MODIFY (empno NUMBER(6), ename VARCHAR2(100));
+
+7. Query to add a new column in the employee table
+
+ALTER TABLE employee 
+ADD hire_date DATE;
+
+8.Query to add multiple columns in the employee table
+
+ALTER TABLE employee 
+ADD (email VARCHAR2(100), department VARCHAR2(50));
+
+9. Query to drop a column from an existing table employee
+
+ALTER TABLE employee 
+DROP COLUMN department;
+
+10.Query to drop multiple columns from the employee table
+
+ALTER TABLE employee 
+DROP (email, hire_date);
+
+11.Query to rename table employee to emp
+
+ALTER TABLE employee 
+RENAME TO emp;
+
+12.Delete the contact_no attribute from the location table
+
+ALTER TABLE location 
+DROP COLUMN contact_no
+
+13.Make the dept attribute of the employee table a foreign key referencing the department table
+
+ALTER TABLE employee 
+ADD CONSTRAINT fk_dept FOREIGN KEY (dept) 
+REFERENCES department (d_name);
+
+14. Rename the city attribute to address in the location table
+
+ALTER TABLE location 
+RENAME COLUMN city TO address;
+
+15.13. Truncate the loc table
+
+TRUNCATE TABLE loc;
+
+
+19. Show the employees' f_name, l_name, salary, and the salary after a 1000 INR bonus
+
+SELECT f_name, l_name, salary, (salary + 1000) AS bonus_salary 
+FROM employee;
+
+20.20. Show employees' annual salary with a 1000 INR yearly bonus and the annual salary with a 100 INR monthly bonus
+
+SELECT f_name, l_name, 
+       (salary * 12 + 1000) AS annual_salary_with_yearly_bonus,
+       (salary * 12 + 1200) AS annual_salary_with_monthly_bonus 
+FROM employee;
+
+23. Show the emp_id, f_name, l_name, and job_type of the employee with the highest salary
+
+SELECT emp_id, f_name, l_name, job_type 
+FROM employee 
+WHERE salary = (SELECT MAX(salary) FROM employee);
+
+24.CREATE TABLE OWNS (
+    driver_id VARCHAR2(20),
+    regno VARCHAR2(20),
+    PRIMARY KEY (driver_id, regno),
+    FOREIGN KEY (driver_id) REFERENCES PERSON(driver_id),
+    FOREIGN KEY (regno) REFERENCES CAR(regno)
+);
+
+CREATE TABLE PARTICIPATED (
+    driver_id VARCHAR2(20),
+    regno VARCHAR2(20),
+    report_number NUMBER,
+    damage_amount NUMBER,
+    PRIMARY KEY (driver_id, regno, report_number),
+    FOREIGN KEY (driver_id) REFERENCES PERSON(driver_id),
+    FOREIGN KEY (regno) REFERENCES CAR(regno),
+    FOREIGN KEY (report_number) REFERENCES ACCIDENT(report_number)
+);
+
+
+25.iv. Find the total number of people who owned cars involved in accidents in 2006
+
+SELECT COUNT(DISTINCT driver_id) AS total_people
+FROM PARTICIPATED p
+JOIN ACCIDENT a ON p.report_number = a.report_number
+WHERE EXTRACT(YEAR FROM a.date) = 2006;
+
+27. Find the number of accidents involving a specific car model
+
+SELECT COUNT(*) AS total_accidents
+FROM PARTICIPATED p
+JOIN CAR c ON p.regno = c.regno
+WHERE c.model = 'Toyota';
+
+28.SELECT e.emp_name, d.dept_name
+FROM Employee e, Department d
+WHERE e.dept_id = d.dept_id;
